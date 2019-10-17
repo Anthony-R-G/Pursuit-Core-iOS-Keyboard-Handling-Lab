@@ -64,26 +64,14 @@ class ViewController: UIViewController {
     
     
     @objc func handleKeyboardAppearing(sender: Notification) {
-        print("I have appeared")
-//        NSLayoutConstraint.activate([
-//            scrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-//            scrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-//            scrollView.topAnchor.constraint(equalTo: self.view.topAnchor),
-//            scrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -300)
-//        ])
-         scrollView.contentOffset = CGPoint(x: 0, y: 300)
+        scrollView.contentOffset = CGPoint(x: 0, y: 300)
         scrollView.updateContentView()
-        scrollView.layoutIfNeeded()
+        
     }
     
     @objc func handleKeyboardDisappearing(sender: Notification) {
-        print("I have disappeared")
-        NSLayoutConstraint.activate([
-            scrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 300)
-            
-        ])
         scrollView.contentOffset = CGPoint(x: 0, y: 0)
-        scrollView.layoutIfNeeded()
+        scrollView.updateContentView()
     }
     
     
@@ -131,9 +119,9 @@ class ViewController: UIViewController {
     private func configureImageConstraints() {
         NSLayoutConstraint.activate([
             logoImageView.centerXAnchor.constraint(equalTo: loginButton.centerXAnchor),
-            logoImageView.topAnchor.constraint(equalTo: userNameTextField.topAnchor, constant: -400),
-            logoImageView.widthAnchor.constraint(equalToConstant: 299),
-            logoImageView.heightAnchor.constraint(equalToConstant: 99)
+            logoImageView.topAnchor.constraint(equalTo: userNameTextField.topAnchor, constant: -370),
+            logoImageView.widthAnchor.constraint(equalToConstant: 200),
+            logoImageView.heightAnchor.constraint(equalToConstant: 200)
         ])
     }
     
@@ -163,22 +151,22 @@ class ViewController: UIViewController {
     private func addKeyboardAppearObserver()
     {
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardAppearing(sender:)), name: UIResponder.keyboardWillShowNotification,
-                                                   object: nil)
+                                               object: nil)
     }
     
     private func addKeyboardDismissObserver()
-      {
-          NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardDisappearing(sender:)), name: UIResponder.keyboardWillHideNotification,
-                                                     object: nil)
-      }
+    {
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardDisappearing(sender:)), name: UIResponder.keyboardWillHideNotification,
+                                               object: nil)
+    }
     
     override func viewDidLayoutSubviews() {
-           super.viewDidLayoutSubviews()
-           constrainScrollView()
-           constrainOtherView()
+        super.viewDidLayoutSubviews()
+        constrainScrollView()
+        constrainOtherView()
         scrollView.updateContentView()
         
-       }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -192,7 +180,7 @@ class ViewController: UIViewController {
         constrainScrollView()
         constrainOtherView()
         setConstraints()
-    
+        
     }
 }
 

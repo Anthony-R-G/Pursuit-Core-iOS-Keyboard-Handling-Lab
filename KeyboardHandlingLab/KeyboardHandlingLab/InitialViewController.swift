@@ -16,7 +16,7 @@ class InitialViewController: UIViewController {
     
     lazy var myView: UIView = { [unowned self] in
         let view = UIView()
-        view.backgroundColor = #colorLiteral(red: 0.7024058104, green: 0.01836320572, blue: 0.01608871482, alpha: 1)
+        view.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
         var frame = view.frame
         frame.size.width = 200
         frame.size.height = 200
@@ -59,7 +59,7 @@ class InitialViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = #colorLiteral(red: 1, green: 0.9536138177, blue: 0.9102454782, alpha: 1)
         view.addSubview(myView)
         configureMyViewConstraints()
         self.myView.addGestureRecognizer(tappedScreenRecognizer)
