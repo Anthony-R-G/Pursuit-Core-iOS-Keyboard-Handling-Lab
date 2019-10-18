@@ -14,9 +14,11 @@ class InitialViewController: UIViewController {
         return tapGesture
     }()
     
-    lazy var myView: UIView = { [unowned self] in
-        let view = UIView()
+    lazy var myView: UIImageView = { [unowned self] in
+        let view = UIImageView()
+        view.isUserInteractionEnabled = true
         view.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        view.image = #imageLiteral(resourceName: "lock")
         var frame = view.frame
         frame.size.width = 200
         frame.size.height = 200
@@ -25,38 +27,39 @@ class InitialViewController: UIViewController {
         return view
         }()
     
-    lazy var myViewHeightConstraint: NSLayoutConstraint = {
-        myView.heightAnchor.constraint(equalToConstant: myView.frame.height)
+    lazy var label: UILabel = { [unowned self] in
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.systemFont(ofSize: 15)
+        label.textAlignment = .center
+        view.addSubview(label)
+        label.text = "Hold Lock"
+        return label
     }()
     
-    lazy var myViewWidthConstraint: NSLayoutConstraint = {
-        myView.widthAnchor.constraint(equalToConstant: myView.frame.width)
-    }()
-    
-    lazy var myViewCenterXConstraint: NSLayoutConstraint = {
-        myView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-    }()
-    
-    lazy var myViewTopAnchorConstraint: NSLayoutConstraint = {
-        myView.topAnchor.constraint(equalTo: view.topAnchor, constant: myViewHeightConstraint.constant)
-    }()
     
     @objc private func tapGestureTapped(sender: UIView) {
-          let destVC = ViewController()
+        let destVC = ViewController()
         present(destVC, animated: true, completion: nil)
-      }
+    }
     
     private func configureMyViewConstraints() {
         myView.translatesAutoresizingMaskIntoConstraints = false
-           NSLayoutConstraint.activate([
-                myViewHeightConstraint,
-                myViewWidthConstraint,
-                myViewCenterXConstraint,
-                myViewTopAnchorConstraint
-           ])
+    
+        NSLayoutConstraint.activate([
+            myView.heightAnchor.constraint(equalToConstant: myView.frame.height),
+            myView.widthAnchor.constraint(equalToConstant: myView.frame.width),
+            myView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            myView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            
+            label.heightAnchor.constraint(equalToConstant: 30),
+            label.widthAnchor.constraint(equalToConstant: 80),
+            label.centerXAnchor.constraint(equalTo: myView.centerXAnchor),
+            label.centerYAnchor.constraint(equalTo: myView.centerYAnchor, constant: 150)
+        ])
     }
-
-
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = #colorLiteral(red: 1, green: 0.9536138177, blue: 0.9102454782, alpha: 1)
