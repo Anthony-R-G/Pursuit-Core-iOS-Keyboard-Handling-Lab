@@ -45,6 +45,7 @@ class ViewController: UIViewController {
         let button = UIButton()
         button.setTitle("Forgot Password?", for: .normal)
         button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 16)
         button.showsTouchWhenHighlighted = true
         self.scrollView.addSubview(button)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -62,15 +63,21 @@ class ViewController: UIViewController {
     var scrollView = UIScrollView(frame: UIScreen.main.bounds)
     var contentView = UIView()
     
+    lazy var bottomScrollConstraint: NSLayoutConstraint = {
+        scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+    }()
     
     @objc func handleKeyboardAppearing(sender: Notification) {
         scrollView.contentOffset = CGPoint(x: 0, y: 300)
+//        bottomScrollConstraint = scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -300)
+       
         scrollView.updateContentView()
         
     }
     
     @objc func handleKeyboardDisappearing(sender: Notification) {
         scrollView.contentOffset = CGPoint(x: 0, y: 0)
+       
         scrollView.updateContentView()
     }
     
@@ -125,19 +132,19 @@ class ViewController: UIViewController {
         ])
     }
     
-    func constrainScrollView(){
-        scrollView.backgroundColor = .clear
+    func configureScrollViewConstraints(){
+        scrollView.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             
             scrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             scrollView.topAnchor.constraint(equalTo: self.view.topAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
+            bottomScrollConstraint
         ])
     }
     
-    func constrainOtherView() {
+    func configureContentViewConstraints() {
         contentView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             
@@ -162,8 +169,8 @@ class ViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        constrainScrollView()
-        constrainOtherView()
+        configureScrollViewConstraints()
+        configureContentViewConstraints()
         scrollView.updateContentView()
         
     }
@@ -177,8 +184,8 @@ class ViewController: UIViewController {
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
         
-        constrainScrollView()
-        constrainOtherView()
+        configureScrollViewConstraints()
+        configureContentViewConstraints()
         setConstraints()
         
     }
